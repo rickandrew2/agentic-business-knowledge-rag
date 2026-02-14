@@ -1,6 +1,6 @@
 # Agentic Business Knowledge RAG
 
-An enterprise-grade Retrieval-Augmented Generation (RAG) system designed to extract, process, and intelligently query business knowledge from multiple data sources. Built with FastAPI backend, ChromaDB vector database, and LLM integration for semantic search and context-aware responses.
+An enterprise-grade Retrieval-Augmented Generation (RAG) system designed to extract, process, and intelligently query business knowledge from multiple data sources. Built with FastAPI backend, Qdrant vector database, and LLM integration for semantic search and context-aware responses.
 
 ## Overview
 
@@ -10,7 +10,7 @@ This RAG system combines cutting-edge generative AI with business data retrieval
 
 - **Multi-Format Data Ingestion**: Process CSV, PDF, Markdown, and other document formats
 - **Vector Embeddings**: Semantic search using sentence transformers and embeddings
-- **ChromaDB Integration**: Efficient vector storage and similarity matching
+- **Qdrant Integration**: High-performance vector storage and similarity search
 - **FastAPI Backend**: High-performance, async Python API with automatic documentation
 - **Security-First**: Input validation, authentication, rate limiting, and secure error handling
 - **Comprehensive Testing**: Unit, integration, and E2E test coverage with pytest
@@ -90,7 +90,7 @@ powershell -ExecutionPolicy Bypass -File test_upload.ps1
 │   │   │   ├── unit/                  # Unit tests
 │   │   │   ├── integration/           # Integration tests
 │   │   │   └── e2e/                   # End-to-end tests
-│   │   ├── chroma_data/               # ChromaDB vector storage
+│   │   ├── qdrant_data/               # Qdrant vector storage
 │   │   ├── requirements.txt           # Python dependencies
 │   │   └── pytest.ini                 # Pytest configuration
 │   ├── data/                          # Sample data files
@@ -200,7 +200,7 @@ Reviews code for correctness, security vulnerabilities, test coverage, performan
 
 ### Testing Strategy
 - **Unit Tests**: 80% coverage for embeddings and retrieval logic
-- **Integration Tests**: 15% coverage for API endpoints and ChromaDB operations
+- **Integration Tests**: 15% coverage for API endpoints and Qdrant operations
 - **E2E Tests**: 5% coverage for complete ingestion-to-retrieval workflows
 - **Security Tests**: Input validation and authentication flow testing
 
@@ -228,7 +228,7 @@ Reviews code for correctness, security vulnerabilities, test coverage, performan
 ### Query Pipeline
 1. **Input**: User question or query
 2. **Embedding**: Convert query to vector using same embeddings model
-3. **Retrieval**: Find similar vectors in ChromaDB (top-k results)
+3. **Retrieval**: Find similar vectors in Qdrant (top-k results)
 4. **Context**: Package retrieved documents as context
 5. **Output**: Return ranked results with relevance scores
 
