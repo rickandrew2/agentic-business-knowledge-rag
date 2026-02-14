@@ -374,7 +374,7 @@ When contributing to this RAG system:
 
 Current implementation includes:
 - ✅ FastAPI backend with async support
-- ✅ ChromaDB integration for vector storage
+- ✅ QDrant integration for vector storage
 - ✅ Document ingestion pipeline (CSV, Markdown, text)
 - ✅ Semantic search and retrieval API
 - ✅ Security validation and error handling
