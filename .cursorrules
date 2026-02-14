@@ -1,67 +1,70 @@
-# Cursor Rules - Enterprise Next.js Template
-# This is an enterprise-grade Next.js development template with comprehensive security, testing, and developer experience optimizations.
-# Detailed rules are in .cursor/rules/*.mdc files - refer to those for implementation patterns.
+# Cursor Rules - Technology-Agnostic Development Template
+# This is a flexible development template that adapts to any technology stack with enterprise-grade patterns.
+# Detailed rules are in agents/rules/*.mdc files - refer to those for implementation patterns.
 
 ## Developer Identity & Communication
-- Primary developer: Rick (full-stack developer)
-- AI assistant should be called "rick" when referenced
-- Provide clear, step-by-step solutions with actionable code examples
+- AI assistant should provide clear, step-by-step solutions with actionable examples
 - Focus on security, performance, and maintainability in all recommendations
+- Adapt patterns to the chosen technology stack
 
-## Enterprise Tech Stack
-- **Frontend**: Next.js 14+ (App Router), React 18+, TypeScript 5+ (strict mode)
-- **Authentication**: NextAuth.js v5 with multi-provider support
-- **Database**: Database-agnostic (Prisma + PostgreSQL OR Supabase) - choose ONE
-- **Security**: Zod validation, rate limiting (Upstash Redis), OWASP protection
-- **Testing**: Vitest + Testing Library (unit/integration), Playwright (E2E)
-- **Styling**: Tailwind CSS with design system approach
-- **Quality**: ESLint + Prettier + TypeScript strict + pre-commit hooks
-- **Deployment**: Vercel (optimized configuration)
+## Core Principles
+- **Security-first development**: Always validate inputs, authenticate users, implement appropriate rate limiting
+- **Type safety**: Use strong typing systems available in chosen language/framework
+- **Performance optimization**: Monitor resource usage, implement caching, optimize assets
+- **Testing strategy**: Comprehensive testing at unit, integration, and E2E levels
+- **Accessibility**: WCAG 2.1 AA compliance for all user-facing interfaces
+- **Documentation**: Keep project documentation updated and comprehensive
 
-## Core Architecture Principles
-- **Security-first development**: Always validate inputs, authenticate users, rate limit endpoints
-- **Type safety**: End-to-end TypeScript with runtime validation (Zod)
-- **Performance optimization**: Bundle analysis, Core Web Vitals monitoring, optimized images
-- **Testing strategy**: Unit (80%), Integration (15%), E2E (5%) coverage
-- **Database-agnostic**: Support both Prisma and Supabase patterns, choose ONE per project
-- **Feature-oriented structure**: Group by domain/feature, not just by technical layer
+## Architecture Principles
+- **Technology-agnostic**: This template adapts to your chosen stack
+- **Security patterns**: Input validation, authentication, authorization, rate limiting
+- **Performance patterns**: Caching, lazy loading, bundle optimization
+- **Testing patterns**: Unit (80%), Integration (15%), E2E (5%) coverage target
+- **Feature-oriented structure**: Group by domain/feature, not just technical layer
 
 ## Security Requirements (CRITICAL)
-- **Input validation**: All user inputs MUST use Zod schemas
-- **Authentication**: NextAuth.js v5 for all auth flows with secure session management
-- **Rate limiting**: Public endpoints MUST have rate limiting (Upstash Redis)
+- **Input validation**: All user inputs MUST be validated with appropriate schema validation
+- **Authentication**: Implement secure authentication flows with session management
+- **Rate limiting**: Public endpoints MUST have rate limiting protection
 - **Authorization**: Role-based access control with proper middleware
 - **Error handling**: Never expose sensitive data in error responses
-- **Database access**: ORM-only, no raw SQL unless performance-critical
+- **Database access**: Use ORM/ODM patterns, avoid raw queries unless performance-critical
 
 ## Code Quality Standards
-- **TypeScript**: Strict mode, no `any` usage, proper type inference
-- **Components**: Server Components by default, "use client" only when necessary
-- **Testing**: All business logic and user flows must have tests
-- **Performance**: Monitor bundle size, use `next/image`, lazy loading
-- **Accessibility**: WCAG 2.1 AA compliance for all user-facing components
-- **Documentation**: Keep README, CLAUDE.md, and AGENTS.MD updated
+- **Type Safety**: Use strict typing, avoid loose type usage
+- **Performance**: Monitor bundle/binary size, implement lazy loading patterns
+- **Accessibility**: WCAG 2.1 AA compliance for user-facing components
+- **Testing**: All business logic and user flows must have appropriate tests
+- **Documentation**: Keep README, CLAUDE.md, and AGENTS.md updated
 
-## Agent Delegation (See AGENTS.MD for details)
-- **UI/Design work** → Gemini agent (snippet_frontend, modify_frontend)
-- **API/Business logic** → BackendAgent
-- **Database/Schema** → DBAgent  
+## Technology Stack Adaptation
+Choose your stack and apply these patterns consistently:
+
+### Frontend Options
+- **React/Next.js/Vue/Svelte**: Component-based with proper state management
+- **Angular**: Component + service architecture with TypeScript
+- **Traditional**: Server-side rendering with progressive enhancement
+
+### Backend Options  
+- **Node.js**: Express, Fastify, or framework API routes
+- **Python**: Django, FastAPI, Flask with proper ORM patterns
+- **Other**: Adapt patterns to your chosen backend technology
+
+### Database Options
+- **SQL**: PostgreSQL, MySQL with ORM (Prisma, TypeORM, SQLAlchemy)
+- **NoSQL**: MongoDB, DynamoDB with ODM patterns
+- **Cloud**: Supabase, Firebase, managed database services
+
+## Agent Delegation (See AGENTS.md for details)
+- **UI/Design work** → FrontendAgent
+- **API/Business logic** → BackendAgent  
+- **Database/Schema** → DatabaseAgent
 - **Testing implementation** → TestAgent
 - **Security reviews** → SecurityAgent
 - **Code quality** → ReviewerAgent
-- **Figma implementation** → Follow Figma MCP workflow
 
-## Development Workflow
-1. **Security first**: Validate inputs, check authentication, apply rate limiting
-2. **Type safety**: Use Zod schemas and TypeScript strict mode
-3. **Test coverage**: Write tests for business logic and critical paths
-4. **Performance**: Use `npm run analyze` to monitor bundle size
-5. **Quality gates**: Run `npm run lint`, `npm run type-check`, tests before commits
-6. **Agent coordination**: Delegate complex tasks to specialized agents
-
-## Communication Style
-- **Actionable solutions**: Provide specific code examples and clear implementation steps
-- **Security awareness**: Always mention security implications and best practices
-- **Performance focus**: Consider bundle size, loading times, and Core Web Vitals
-- **Test guidance**: Include testing patterns and coverage recommendations
-- **Enterprise mindset**: Think production-ready, scalable, maintainable code
+## Usage Instructions
+1. Choose your technology stack
+2. Adapt the patterns in agents/rules/*.mdc to your chosen technologies
+3. Update this .cursorrules file with stack-specific details
+4. Begin development following the established patterns

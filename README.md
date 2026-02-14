@@ -1,309 +1,301 @@
-# Enterprise Next.js Template
+# Technology-Agnostic Development Template
 
-🚀 **A production-ready Next.js template with enterprise-grade security, testing, and developer experience.**
+A flexible, enterprise-grade development template that adapts to any modern technology stack while maintaining security-first development patterns, comprehensive testing, and excellent developer experience. Built with AI assistant integration for Cursor, GitHub Copilot, and other AI coding tools.
 
-## ✨ Key Features
+## Overview
 
-### 🔒 **Security First** 
-- **NextAuth.js v5** with multiple provider support
-- **Input validation** with Zod schemas at every boundary
-- **Rate limiting** with Upstash Redis
-- **Security headers** and Content Security Policy
-- **OWASP Top 10** protection patterns
+This template provides a proven agent-based development structure that works with any technology stack. It includes comprehensive rules, patterns, and guidelines that help both developers and AI assistants maintain consistent, secure, and high-quality code across different projects.
 
-### 🗄️ **Flexible Database** 
-- **Prisma + PostgreSQL** for complex schemas and type safety
-- **Supabase** for rapid development with built-in auth and real-time
-- Choose your approach - template supports both with clear separation
+## Key Features
 
-### ⚡ **Performance Optimized**
-- **Next.js 14+** with App Router and Server Components
-- **Bundle analysis** and optimization out of the box
-- **Image optimization** with next/image
-- **Core Web Vitals** monitoring ready
+- **Technology-Agnostic**: Works with React, Vue, Angular, Node.js, Python, Go, Rust, or any modern stack
+- **AI Assistant Ready**: Pre-configured for Cursor, GitHub Copilot, and other AI coding tools
+- **Security-First**: Built-in OWASP Top 10 protection patterns and security guidelines
+- **Comprehensive Testing**: Testing strategy with unit, integration, and E2E coverage targets
+- **Agent-Based Architecture**: Specialized agents for frontend, backend, database, testing, and security
+- **Type-Safe Patterns**: Strong typing and validation patterns across the stack
+- **Accessibility Compliant**: WCAG 2.1 AA standards built into development patterns
 
-### 🧪 **Comprehensive Testing**
-- **Vitest + Testing Library** for unit and integration tests
-- **Playwright** for end-to-end testing with multiple browsers
-- **Accessibility testing** with axe-core
-- **80%+ code coverage** targets
+## Quick Start
 
-### 🤖 **AI-First Development**
-- **Cursor AI** integration with comprehensive rule files
-- **Agent system** for delegating UI, backend, and database work
-- **Figma-to-code** workflow with MCP integration
-
-### 🛠️ **Developer Experience**
-- **TypeScript** with strict configuration
-- **ESLint + Prettier** with security and accessibility rules
-- **Husky + lint-staged** for pre-commit quality gates
-- **Bundle analyzer** and performance monitoring
-
----
-
-## 🚀 Quick Start
-
-### 1. Clone and Install
+### 1. Clone the Template
 
 ```bash
-git clone <your-repo> my-app
-cd my-app
-npm install
+git clone <this-repo> my-project
+cd my-project
 ```
 
-### 2. Choose Your Database Strategy
+### 2. Choose Your Technology Stack
 
-**Option A: Prisma + PostgreSQL** (Complex schemas, maximum type safety)
-```bash
-# Set up your PostgreSQL database
-cp .env.example .env.local
-# Edit DATABASE_URL in .env.local
+This template adapts to your preferred technologies:
 
-npm run db:migrate
-npm run db:generate
-```
+**Frontend Options:**
+- React/Next.js, Vue/Nuxt, Angular, Svelte/SvelteKit, or traditional SSR
 
-**Option B: Supabase** (Rapid development, built-in auth)
-```bash
-cp .env.example .env.local
-# Edit NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
+**Backend Options:**
+- Node.js (Express/Fastify), Python (Django/FastAPI), Go, Rust, Java/Spring
 
-# Generate types
-npx supabase gen types typescript --project-id your-project > types/database.ts
-```
+**Database Options:**
+- PostgreSQL/MySQL with ORM, MongoDB/NoSQL, or cloud solutions like Supabase
 
-### 3. Configure Environment
+### 3. Configure AI Assistants
 
-```bash
-# Copy environment template
-cp .env.example .env.local
+The template includes configuration files for multiple AI assistants:
 
-# Generate NextAuth secret
-openssl rand -base64 32
+- **Cursor**: Uses `.cursorrules` and `agents/rules/*.mdc` files (auto-loaded)
+- **GitHub Copilot**: Uses `.github/copilot-instructions.md` (auto-loaded)
+- **Other AI Tools**: Reference `AI_INSTRUCTIONS.md` in your prompts
 
-# Edit .env.local with your values
-```
+### 4. Initialize Your Project
 
-### 4. Start Development
+Set up your chosen technologies:
 
 ```bash
-npm run dev
+# Example for Node.js + React
+npm init -y
+npm install react next typescript
+
+# Example for Python + Django
+pip install django djangorestframework
+django-admin startproject myproject .
+
+# Example for Go + Gin
+go mod init myproject
+go get github.com/gin-gonic/gin
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) 🎉
-
----
-
-## 📁 Project Structure
+## Directory Structure
 
 ```
-app/                    # Next.js App Router
-├── (auth)/            # Authentication pages
-├── api/               # API routes with validation  
-├── dashboard/         # Protected dashboard pages
-└── globals.css        # Global styles
-
-components/            # Shared components
-├── ui/               # Base design system
-├── forms/            # Form components
-└── layout/           # Layout components
-
-lib/                  # Core utilities
-├── auth.ts           # NextAuth configuration
-├── data/             # Database access layer
-├── validations/      # Zod schemas
-└── utils.ts          # Utility functions
-
-.cursor/rules/        # AI development rules
-├── core.mdc          # Architecture guidelines
-├── frontend.mdc      # React/Next.js patterns
-├── database.mdc      # Database patterns
-├── security.mdc      # Security best practices
-└── testing.mdc       # Testing patterns
-
-__tests__/           # Unit & integration tests
-e2e/                 # Playwright E2E tests
-docs/                # Project documentation
+├── agents/                          # Agent rules and skills
+│   ├── rules/                      # Development rules and patterns
+│   │   ├── core.mdc               # Core architecture guidelines
+│   │   ├── security.mdc           # Security patterns and requirements
+│   │   ├── testing.mdc            # Testing strategy and patterns
+│   │   ├── frontend.mdc           # Frontend development patterns
+│   │   ├── database.mdc           # Database design and patterns
+│   │   └── style.mdc              # Code style and formatting rules
+│   └── skills/                     # Reusable agent skills
+│       ├── web-design-guidelines/  # Web interface guidelines skill
+│       └── find-skills/           # Skill discovery utilities
+├── .github/
+│   └── copilot-instructions.md    # GitHub Copilot configuration
+├── AGENTS.md                       # Agent responsibilities and usage guide
+├── CLAUDE.md                       # Project guidelines and architecture
+├── AI_INSTRUCTIONS.md              # Universal AI assistant instructions
+├── .cursorrules                    # Cursor AI assistant configuration
+├── .aiderignore                    # Aider AI assistant ignore patterns
+├── .editorconfig                   # Editor configuration
+├── .gitignore                      # Git ignore patterns
+└── README.md                       # This file
 ```
 
----
+## Core Configuration Files
 
-## 🛠️ Development Commands
+### Documentation Files
 
-### Development
-```bash
-npm run dev                # Start development server
-npm run build              # Production build
-npm run start              # Start production server
-```
+- **`CLAUDE.md`** - Overall project guidelines, architecture principles, and technology stack selection
+- **`AGENTS.md`** - Agent delegation patterns, responsibilities, and when to use each agent
+- **`AI_INSTRUCTIONS.md`** - Universal instructions for any AI assistant (reference explicitly)
 
-### Code Quality
-```bash
-npm run lint               # Check linting
-npm run lint:fix           # Auto-fix issues
-npm run format             # Format code
-npm run type-check         # TypeScript validation
-```
+### AI Assistant Configuration
 
-### Testing
-```bash
-npm run test               # Unit tests
-npm run test:watch         # Tests in watch mode
-npm run test:ui            # Tests with UI
-npm run test:e2e           # Playwright E2E tests
-npm run test:e2e:ui        # E2E tests with UI
-```
+- **`.cursorrules`** - Cursor-specific rules (auto-loaded by Cursor)
+- **`.github/copilot-instructions.md`** - GitHub Copilot instructions (auto-loaded)
+- **`agents/rules/*.mdc`** - Detailed rules with `alwaysApply: true` for auto-loading in Cursor
 
-### Database (Prisma)
-```bash
-npm run db:generate        # Generate Prisma client
-npm run db:migrate         # Run migrations
-npm run db:push            # Push schema changes
-npm run db:studio          # Open Prisma Studio
-```
+### Rule Files
 
-### Analysis
-```bash
-npm run analyze            # Bundle size analysis
-```
+- **`agents/rules/core.mdc`** - Core architecture principles and best practices
+- **`agents/rules/security.mdc`** - Security patterns, OWASP Top 10 protection
+- **`agents/rules/testing.mdc`** - Testing strategy, coverage targets, patterns
+- **`agents/rules/frontend.mdc`** - Frontend development patterns and accessibility
+- **`agents/rules/database.mdc`** - Database schema design and query optimization
+- **`agents/rules/style.mdc`** - Code style guidelines and formatting rules
 
----
+## Agent-Based Development
 
-## 🏗️ Architecture Decisions
+This template uses specialized agents for different aspects of development:
 
-### Database Strategy
+### FrontendAgent
+Handles UI/UX development, component creation, design system implementation, and accessibility compliance.
 
-This template supports two database approaches:
+### BackendAgent
+Manages API development, business logic, authentication, authorization, rate limiting, and security middleware.
 
-| Feature | Prisma + PostgreSQL | Supabase |
-|---------|--------------------|-----------| 
-| **Type Safety** | ✅ Compile-time | ✅ Generated types |
-| **Complex Queries** | ✅ Advanced SQL | ⚠️ Limited joins |
-| **Authentication** | ➡️ NextAuth.js | ✅ Built-in |
-| **Real-time** | ➡️ Custom solution | ✅ Built-in |
-| **File Storage** | ➡️ External service | ✅ Built-in |
-| **Learning Curve** | ⚠️ Moderate | ✅ Low |
-| **Hosting Flexibility** | ✅ Any provider | ⚠️ Vendor lock-in |
+### DatabaseAgent
+Owns database schema design, migrations, query optimization, and data access patterns.
 
-**Choose Prisma** for complex applications with custom business logic.
-**Choose Supabase** for rapid prototyping and apps needing real-time features.
+### TestAgent
+Implements comprehensive testing strategy across unit, integration, E2E, accessibility, and security testing.
 
-### Security Architecture
+### SecurityAgent
+Ensures security-first development with input validation, authentication patterns, authorization checks, and OWASP compliance.
 
-- **Input Validation**: Zod schemas at API boundaries
-- **Authentication**: NextAuth.js v5 with session management
-- **Authorization**: Middleware-based route protection
-- **Rate Limiting**: Per-endpoint limits with sliding windows
-- **Headers**: Comprehensive security headers and CSP
-- **Database**: ORM-only access, no raw SQL
+### ReviewerAgent
+Performs code reviews focusing on correctness, security, performance, test coverage, and accessibility.
+
+## Core Principles
+
+### Security-First Development
+- Validate all inputs at application boundaries with schema validation
+- Authenticate and authorize every protected endpoint
+- Rate limit public endpoints to prevent abuse
+- Sanitize outputs to prevent injection attacks
+- Never expose sensitive data in error messages or logs
 
 ### Testing Strategy
+- **Unit Tests**: 80% coverage for business logic
+- **Integration Tests**: 15% coverage for API endpoints and database operations
+- **E2E Tests**: 5% coverage for critical user journeys
+- **Accessibility Tests**: WCAG 2.1 AA compliance for all UI
 
-- **Unit Tests (80%)**: Components, hooks, utilities
-- **Integration Tests (15%)**: API routes, database operations
-- **E2E Tests (5%)**: Critical user journeys
-- **Accessibility**: Automated axe-core testing
+### Type Safety
+- Use strong typing systems available in your chosen language
+- Implement runtime validation for all external/user-provided data
+- Validate at boundaries: API endpoints, form submissions, configuration
+- Generate types from schemas when possible (OpenAPI, GraphQL, database schemas)
 
----
+### Code Quality
+- Maintain consistent patterns throughout the codebase
+- Follow established code style guidelines
+- Ensure proper error handling and logging
+- Keep documentation updated with code changes
 
-## 🤖 AI-Assisted Development
+## Security Patterns
 
-This template includes comprehensive Cursor AI integration:
+### Input Validation Example
 
-### Agent System
+```typescript
+// TypeScript with Zod
+import { z } from 'zod'
 
-- **Gemini**: UI/design work (`snippet_frontend`, `modify_frontend`)
-- **BackendAgent**: API routes and business logic
-- **DBAgent**: Database schema and queries
-- **TestAgent**: Testing implementation
-- **ReviewerAgent**: Code review and security
-
-### Cursor Rules
-
-Detailed implementation patterns in `.cursor/rules/`:
-- `core.mdc` - Architecture and development identity
-- `frontend.mdc` - React/Next.js/Tailwind patterns
-- `database.mdc` - Database-agnostic patterns
-- `security.mdc` - Security best practices
-- `testing.mdc` - Testing patterns and examples
-
----
-
-## 🚢 Deployment
-
-### Vercel (Recommended)
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Set environment variables in Vercel dashboard
+const userSchema = z.object({
+  email: z.string().email().toLowerCase(),
+  password: z.string().min(8)
+})
 ```
 
-### Other Platforms
+```python
+# Python with Pydantic
+from pydantic import BaseModel, EmailStr
 
-This template works with any Node.js hosting provider:
-- **Netlify**: Add `netlify.toml` configuration
-- **Railway**: Connect GitHub repository
-- **Docker**: Add `Dockerfile` and `docker-compose.yml`
+class User(BaseModel):
+    email: EmailStr
+    password: str
+```
 
-### Environment Variables
+### Rate Limiting Example
 
-Essential production variables:
-- `DATABASE_URL` or Supabase credentials
-- `NEXTAUTH_SECRET` (32+ characters)
-- `NEXTAUTH_URL` (your production domain)
-- Rate limiting: `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
+```javascript
+// Node.js with express-rate-limit
+const rateLimit = require('express-rate-limit')
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 attempts per window
+  message: 'Too many authentication attempts'
+})
+```
+
+## Testing Strategy
+
+### Coverage Targets
+- **Unit Tests**: 80% coverage for business logic
+- **Integration Tests**: 15% coverage for API endpoints and database operations
+- **E2E Tests**: 5% coverage for critical user journeys
+
+### Testing Tools by Technology
+
+**JavaScript/TypeScript:**
+- Unit/Integration: Jest, Vitest, or framework-specific test runners
+- E2E: Playwright, Cypress, or Selenium
+- Component: Testing Library, Enzyme
+
+**Python:**
+- Unit/Integration: pytest, unittest
+- E2E: Selenium, Playwright
+- API: requests, httpx
+
+**Go:**
+- Unit/Integration: Built-in testing package, testify
+- E2E: Selenium, Playwright
+- HTTP: httptest package
+
+## AI Assistant Integration
+
+### Cursor
+Rules are automatically loaded from:
+- `.cursorrules` file
+- `agents/rules/*.mdc` files with `alwaysApply: true`
+- `AGENTS.md` and `CLAUDE.md` (via workspace rules)
+
+### GitHub Copilot
+Instructions are automatically loaded from:
+- `.github/copilot-instructions.md`
+
+### Other AI Assistants
+Reference `AI_INSTRUCTIONS.md` explicitly in your prompts:
+- "Follow the patterns in `AI_INSTRUCTIONS.md`"
+- "Check `AGENTS.md` for agent delegation"
+- "Apply security patterns from `agents/rules/security.mdc`"
+
+## Usage Examples
+
+### Frontend Development
+```
+"Create a responsive navigation component with accessibility support"
+"Redesign the user profile page following our design system"
+"Implement the login form with proper validation"
+```
+
+### Backend Development
+```
+"Create a secure user registration endpoint with rate limiting"
+"Implement JWT authentication middleware"
+"Add password reset functionality with email verification"
+```
+
+### Database Operations
+```
+"Design a user roles and permissions schema"
+"Create a migration to add audit logging"
+"Optimize the user query to prevent N+1 problems"
+```
+
+## Documentation
+
+### Getting Started
+1. Review `CLAUDE.md` for architecture and technology selection guidance
+2. Check `AGENTS.md` for agent responsibilities and delegation patterns
+3. Reference `agents/rules/*.mdc` files for detailed implementation patterns
+4. Configure your AI assistant using the appropriate configuration file
+
+### Additional Resources
+- **Architecture**: See `CLAUDE.md` for detailed architecture guidelines
+- **Agent Usage**: See `AGENTS.md` for detailed agent responsibilities
+- **Security**: See `agents/rules/security.mdc` for security patterns
+- **Testing**: See `agents/rules/testing.mdc` for testing strategy
+- **Code Style**: See `agents/rules/style.mdc` for formatting rules
+
+## Quality Gates
+
+All code must meet these standards:
+- Pass linting and formatting checks
+- Meet minimum test coverage thresholds (80% unit, 15% integration, 5% E2E)
+- Pass security scans without high-severity issues
+- Pass accessibility tests for user-facing features
+- Follow established patterns and conventions
+
+## Contributing
+
+When contributing to this template:
+1. Maintain technology-agnostic patterns
+2. Update relevant rule files in `agents/rules/`
+3. Keep documentation synchronized with code changes
+4. Follow security and testing patterns
+5. Ensure AI assistant configurations remain compatible
 
 ---
 
-## 📚 Documentation
-
-- **[CLAUDE.md](CLAUDE.md)** - Architecture guidelines and coding standards
-- **[AGENTS.md](AGENTS.md)** - AI agent responsibilities and workflows
-- **[docs/architecture.md](docs/architecture.md)** - Detailed architecture decisions
-- **[.cursor/rules/](/.cursor/rules/)** - Implementation patterns for AI
-
----
-
-## 🤝 Contributing
-
-1. **Fork** the repository
-2. **Create** a feature branch
-3. **Follow** the coding standards in `CLAUDE.md`
-4. **Add tests** for new functionality
-5. **Run** quality checks: `npm run lint && npm run test`
-6. **Submit** a pull request
-
-### Quality Gates
-
-- ✅ TypeScript compilation
-- ✅ ESLint + Prettier
-- ✅ Unit test coverage >80%
-- ✅ E2E test coverage for new features
-- ✅ Security scan passes
-
----
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Next.js** team for the excellent framework
-- **Vercel** for hosting and development experience
-- **Prisma** and **Supabase** for database solutions
-- **Testing Library** and **Playwright** for testing tools
-- **Tailwind CSS** for utility-first styling
-
----
-
-**Built with ❤️ for modern web development**
-
-[⭐ Star this repo](https://github.com/your-username/your-repo) if it helped you!
+**Ready to start building?** Choose your technology stack, adapt the configuration files, and begin development with enterprise-grade patterns from day one.

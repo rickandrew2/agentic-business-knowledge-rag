@@ -1,39 +1,52 @@
 ## Agents
 
-This file defines the different agents (MCP helpers) available in this **enterprise-grade Next.js template** and when to use each one.
+This file defines the different agents (MCP helpers) available in this **technology-agnostic development template** and when to use each one.
 
 - See `CLAUDE.md` for overall project guidelines.
 - Use this file as a quick reference for **which agent to call for which task**.
-- All agents now support **security-first development** with comprehensive validation patterns.
+- All agents support **security-first development** with comprehensive validation patterns.
+- Adapt the specific technologies and tools mentioned to match your chosen tech stack.
 
 ---
 
-### Gemini (Frontend Developer)
+### FrontendAgent (UI/UX Developer)
 
-**Gemini is your frontend developer.** For all UI/design work, use this MCP. Tool descriptions contain all necessary instructions.
+**FrontendAgent is your frontend developer.** For all UI/design work, use this MCP. Adapt tool descriptions to your chosen frontend framework.
 
-#### When to use Gemini
+#### When to use FrontendAgent
 
 - New visual component (popup, card, section, etc.) → `snippet_frontend` or `create_frontend`
 - Redesign/restyle of existing UI → `modify_frontend`
-- Figma-driven implementation → follow the Figma MCP rules below
+- Design system implementation → follow design integration patterns
 - Component library and design system work
 - Accessibility improvements and WCAG compliance
-- Pure text/logic or trivial tweaks → do it directly without Gemini
+- Pure logic or trivial tweaks → handle directly without delegating
 
 #### Enhanced Capabilities
 
 - **Security-aware components**: Automatically includes proper input sanitization
 - **Accessibility-first**: Components include ARIA attributes and keyboard navigation
-- **Performance-optimized**: Uses Next.js Image, lazy loading, and bundle optimization
-- **Type-safe**: All components include proper TypeScript interfaces
+- **Performance-optimized**: Uses framework-specific optimization patterns
+- **Type-safe**: All components include proper type definitions (TypeScript/PropTypes/etc.)
 
-#### Critical rules
+#### Framework Adaptations
+
+**React/Next.js/Vue/Svelte:**
+- Component-based architecture with proper state management
+- Framework-specific image optimization and lazy loading
+- CSS-in-JS, Tailwind, or styled-components patterns
+
+**Angular:**
+- Component + service architecture
+- RxJS reactive patterns
+- Angular Material or custom design system
+
+#### Critical Rules
 
 1. If UI already exists and you need to redesign/restyle it → use `modify_frontend`, **not** `snippet_frontend`.
-2. Tasks can be mixed (logic + UI). Do the logic yourself, delegate the UI to Gemini.
+2. Tasks can be mixed (logic + UI). Handle logic yourself, delegate UI to FrontendAgent.
 3. **Always include accessibility testing** patterns for new components.
-4. **Follow security patterns** from `.cursor/rules/security.mdc` for user inputs.
+4. **Follow security patterns** from `agents/rules/security.mdc` for user inputs.
 
 ---
 
@@ -41,45 +54,53 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 
 #### Scope
 
-- Owns **Next.js API routes**, **Server Actions**, and **service/use-case layers**
-- **Authentication & Authorization** with NextAuth.js v5
+- Owns **API routes**, **business logic layers**, and **service functions**
+- **Authentication & Authorization** implementation
 - **Rate limiting** and **security middleware**
-- **Input validation** with Zod schemas
+- **Input validation** with schema validation libraries
 
 #### Enhanced Responsibilities
 
 - Implement secure API endpoints with comprehensive validation
 - Add authentication middleware and role-based access control
 - Integrate rate limiting for DoS protection
-- Create type-safe server actions and data fetching
+- Create type-safe API responses and data fetching
 - Handle errors gracefully with proper logging
-- Move business logic into dedicated service functions (not inside route handlers/components)
-- Keep responses typed and consistent with shared types
+- Move business logic into dedicated service functions (not in controllers/handlers)
+- Keep responses typed and consistent with shared interfaces
 
-#### Security Requirements (NEW)
+#### Security Requirements
 
-- **Always validate input** at API boundaries using Zod schemas
+- **Always validate input** at API boundaries using schema validation
 - **Implement rate limiting** for all public endpoints
-- **Use NextAuth.js v5** for authentication flows
 - **Apply OWASP Top 10** protection patterns
 - **Log security events** appropriately without exposing sensitive data
-- **Handle database errors** gracefully with proper error responses
+- **Handle errors** gracefully with proper error responses
 
-#### Database Integration
+#### Technology Adaptations
 
-- **Database-agnostic**: Support both Prisma and Supabase patterns
-- **Choose your approach**: Use consistent database access patterns
-- **Type-safe queries**: Leverage ORM type generation
-- **Error handling**: Proper database error catching and transformation
+**Node.js (Express/Fastify/Next.js API):**
+- RESTful or GraphQL API patterns
+- Middleware-based authentication and validation
+- Schema validation with Zod, Joi, or similar
+
+**Python (Django/FastAPI/Flask):**
+- Django REST Framework or FastAPI patterns
+- Pydantic models for validation
+- SQLAlchemy or Django ORM patterns
+
+**Other Stacks:**
+- Adapt patterns to your chosen backend framework
+- Maintain consistent validation, authentication, and error handling
 
 ---
 
-### DBAgent (Database & Schema Management)
+### DatabaseAgent (Data Layer & Schema Management)
 
 #### Scope
 
 - Owns **database schema, migrations, and data access patterns**
-- **Database-agnostic**: Supports both **Prisma + PostgreSQL** and **Supabase** approaches
+- **Technology-agnostic**: Supports various database and ORM approaches
 
 #### Enhanced Responsibilities
 
@@ -87,34 +108,38 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 - **Migration Management**: Handle schema evolution safely
 - **Query Optimization**: Prevent N+1 queries and performance issues
 - **Data Access Patterns**: Implement consistent, type-safe data access
-- **Security**: Row-level security, input sanitization, and access controls
+- **Security**: Access controls, input sanitization, and audit logging
 
 #### Database Strategy Support
 
-**For Prisma + PostgreSQL:**
-- Design schema in `prisma/schema.prisma`
-- Create and manage migrations with `prisma migrate`
-- Implement type-safe queries with Prisma Client
-- Handle connection pooling and optimization
+**SQL Databases (PostgreSQL/MySQL/SQLite):**
+- Schema design with proper relationships and constraints
+- Migration strategies with version control
+- ORM integration (Prisma, TypeORM, Sequelize, SQLAlchemy, etc.)
+- Connection pooling and optimization
 
-**For Supabase:**
-- Design tables with Row Level Security (RLS) policies
-- Implement real-time subscriptions where needed
-- Use Supabase client with proper type generation
-- Leverage built-in authentication and storage
+**NoSQL Databases (MongoDB/DynamoDB/Firestore):**
+- Document schema design and validation
+- Index optimization and query patterns
+- ODM integration (Mongoose, etc.)
 
-#### Security Requirements (NEW)
+**Cloud-Native Solutions:**
+- Supabase, Firebase, AWS RDS, Azure SQL, etc.
+- Built-in authentication and real-time features
+- Row-level security policies
 
-- **Input validation**: All database inputs must be validated with Zod
+#### Security Requirements
+
+- **Input validation**: All database inputs must be validated
 - **Access control**: Implement proper authorization checks
-- **SQL injection prevention**: Use ORM-only access, no raw SQL
+- **Injection prevention**: Use ORM/ODM-only access, avoid raw queries
 - **Audit logging**: Track important data changes
 - **Data encryption**: Handle sensitive data appropriately
 
 #### Must
 
 - **Choose one approach** and maintain consistency throughout the project
-- Never run manual ad-hoc destructive SQL in production code
+- Never run manual destructive queries in production code
 - Always keep schema + migrations in sync
 - **Test database operations** with appropriate test patterns
 - **Document schema decisions** and migration strategies
@@ -126,53 +151,51 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 #### Scope
 
 - Owns **complete testing strategy**: unit, integration, E2E, and accessibility testing
-- **Vitest + Testing Library** for unit and integration tests
-- **Playwright** for cross-browser E2E testing
-- **Accessibility testing** with axe-core integration
+- **Framework-agnostic**: Adapts to chosen testing tools and frameworks
 
 #### Enhanced Responsibilities
 
-- **Unit Testing**: Components, hooks, utilities with >80% coverage
-- **Integration Testing**: API routes, database operations, authentication flows
-- **E2E Testing**: Critical user journeys across multiple browsers
+- **Unit Testing**: Components, functions, utilities with >80% coverage
+- **Integration Testing**: API endpoints, database operations, authentication flows
+- **E2E Testing**: Critical user journeys across browsers/devices
 - **Accessibility Testing**: Automated WCAG compliance checking
-- **Performance Testing**: Core Web Vitals and loading time validation
+- **Performance Testing**: Load times, Core Web Vitals, and performance budgets
 - **Security Testing**: Input validation and authentication testing
 
-#### Testing Patterns (NEW)
+#### Testing Patterns
 
-- **Component Testing**: React Testing Library with comprehensive user interaction testing
-- **API Testing**: Mock authentication, database operations, and external services
-- **E2E Testing**: Page Object Model with stable selectors and user journey validation
-- **Accessibility Testing**: Automated axe-core scanning and keyboard navigation testing
+- **Component/Unit Testing**: Framework-appropriate testing utilities
+- **API Testing**: Mock dependencies, test authentication and validation
+- **E2E Testing**: Page Object Model with stable selectors and user scenarios
+- **Accessibility Testing**: Automated scanning and keyboard navigation
 - **Visual Regression**: Screenshot comparison for critical UI components
 
 #### Quality Gates
 
 - **Code Coverage**: Maintain >80% coverage for business logic
 - **E2E Coverage**: All critical user flows must have E2E tests
-- **Accessibility**: All public pages must pass WCAG 2.1 AA standards
-- **Performance**: Core Web Vitals must meet "Good" thresholds
+- **Accessibility**: All public interfaces must pass WCAG 2.1 AA standards
+- **Performance**: Meet performance thresholds for your platform
 - **Security**: Authentication and authorization flows fully tested
 
-#### Tools & Configuration
+#### Technology Adaptations
 
-- **Vitest**: Fast unit testing with ES modules support
-- **Testing Library**: User-focused component testing
-- **Playwright**: Cross-browser E2E testing with trace viewer
-- **@axe-core/playwright**: Automated accessibility testing
-- **MSW**: API mocking for reliable integration tests
+**JavaScript/TypeScript:**
+- Jest, Vitest, or framework-specific test runners
+- Testing Library, Enzyme, or component testing utilities
+- Playwright, Cypress, or Selenium for E2E testing
 
-#### Playwright-specific
+**Python:**
+- pytest, unittest with appropriate fixtures and mocking
+- Selenium or Playwright for browser testing
 
-- Use Playwright MCP when generating or updating **E2E test flows**
-- Aim for stable selectors (`data-testid` attributes) and clear test names
-- **Implement Page Object Model** for maintainable test code
-- **Include accessibility checks** in all E2E test suites
+**Other Languages:**
+- Adapt to language-specific testing frameworks
+- Maintain consistent testing patterns and quality gates
 
 ---
 
-### SecurityAgent (NEW - Security & Compliance)
+### SecurityAgent (Security & Compliance)
 
 #### Scope
 
@@ -184,10 +207,10 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 
 #### Responsibilities
 
-- **Input Validation**: Implement Zod schemas for all user inputs
-- **Authentication Security**: NextAuth.js v5 configuration and session management
+- **Input Validation**: Implement schema validation for all user inputs
+- **Authentication Security**: Secure session management and multi-factor authentication
 - **Authorization**: Role-based access control (RBAC) implementation
-- **Rate Limiting**: DoS protection with sliding window algorithms
+- **Rate Limiting**: DoS protection with appropriate algorithms
 - **Security Headers**: CSP, HSTS, and comprehensive security header configuration
 - **Data Protection**: Encryption, sanitization, and secure data handling
 - **Audit Logging**: Security event logging without exposing sensitive data
@@ -195,19 +218,30 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 
 #### Security Patterns
 
-- **Authentication**: Multi-provider NextAuth.js setup with secure session management
+- **Authentication**: Multi-provider authentication with secure session management
 - **Authorization**: Middleware-based route protection with role validation
-- **Input Validation**: Zod schema validation at every API boundary
-- **Rate Limiting**: Upstash Redis-based rate limiting with different limits per endpoint
+- **Input Validation**: Schema validation at every boundary
+- **Rate Limiting**: Technology-appropriate rate limiting implementation
 - **Error Handling**: Secure error responses that don't leak sensitive information
-- **Database Security**: ORM-only access with parameterized queries
+- **Database Security**: ORM/ODM-only access with parameterized queries
 - **File Upload Security**: Content type validation and secure storage
+
+#### Technology Adaptations
+
+**Web Applications:**
+- JWT tokens with proper expiration and refresh patterns
+- HTTPS enforcement and security headers
+- CORS configuration and CSRF protection
+
+**API Security:**
+- API key management and OAuth2/OpenID Connect
+- Request signing and payload validation
+- Rate limiting per API consumer
 
 #### Must
 
-- **Validate all inputs** with appropriate Zod schemas
+- **Validate all inputs** with appropriate schema validation
 - **Implement rate limiting** on authentication and public endpoints
-- **Use NextAuth.js v5** for all authentication flows
 - **Apply security headers** to all responses
 - **Log security events** appropriately
 - **Never expose sensitive data** in error messages or logs
@@ -225,7 +259,7 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 - **Accessibility compliance** checking
 - **Code quality standards** enforcement
 
-#### Security Review Focus (NEW)
+#### Security Review Focus
 
 - **Input validation**: Ensure all user inputs are properly validated
 - **Authentication flows**: Verify secure authentication implementation
@@ -236,9 +270,9 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 
 #### Quality Standards
 
-- **TypeScript**: Strict typing without `any` usage
+- **Type Safety**: Strict typing without loose type usage
 - **Testing**: Appropriate test coverage for new functionality
-- **Performance**: Bundle size impact and Core Web Vitals consideration
+- **Performance**: Bundle/binary size impact and performance considerations
 - **Accessibility**: WCAG 2.1 AA compliance for user-facing features
 - **Security**: OWASP Top 10 protection patterns
 - **Documentation**: Clear code documentation and README updates
@@ -246,7 +280,7 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 #### Must
 
 - **Flag missing tests** for important logic and security flows
-- **Ensure security patterns** from `.cursor/rules/security.mdc` are followed
+- **Ensure security patterns** from `agents/rules/security.mdc` are followed
 - **Validate accessibility** for all user-facing components
 - **Check performance impact** of new dependencies and code changes
 - **Verify documentation** is updated for significant changes
@@ -254,25 +288,49 @@ This file defines the different agents (MCP helpers) available in this **enterpr
 
 ---
 
-### Figma MCP Integration Rules
+## Design Integration Patterns
 
-These rules define how to translate Figma inputs into code for this project and must be followed for every Figma-driven change.
+These rules define how to translate design inputs into code and must be followed for design-driven development.
 
-#### Required flow (do not skip)
+#### Required Design-to-Code Flow
 
-1. Run `get_design_context` first to fetch the structured representation for the exact node(s).
-2. If the response is too large or truncated, run `get_metadata` to get the high‑level node map and then re‑fetch only the required node(s) with `get_design_context`.
-3. Run `get_screenshot` for a visual reference of the node variant being implemented.
-4. Only after you have both `get_design_context` and `get_screenshot`, download any assets needed and start implementation.
-5. Translate the output (usually React + Tailwind) into this project's conventions, styles and framework. Reuse the project's color tokens, components, and typography wherever possible.
-6. Validate against Figma for 1:1 look and behavior before marking complete.
+1. **Analyze Design**: Extract design tokens, components, and interaction patterns
+2. **Create Design System**: Establish consistent color, typography, and spacing tokens
+3. **Component Architecture**: Break down designs into reusable components
+4. **Responsive Patterns**: Ensure designs work across device sizes
+5. **Accessibility Integration**: Include ARIA attributes and keyboard navigation
+6. **Performance Optimization**: Implement lazy loading and efficient rendering
 
-#### Implementation rules
+#### Implementation Rules
 
-- Treat the Figma MCP output (React + Tailwind) as a representation of design and behavior, not as final code style.
-- Replace Tailwind utility classes with the project's preferred utilities/design‑system tokens when applicable.
-- Reuse existing components (e.g., buttons, inputs, typography, icon wrappers) instead of duplicating functionality.
-- Use the project's color system, typography scale, and spacing tokens consistently.
-- Respect existing routing, state management, and data‑fetch patterns already adopted in the repo.
-- Strive for 1:1 visual parity with the Figma design. When conflicts arise, prefer design‑system tokens and adjust spacing or sizes minimally to match visuals.
-- Validate the final UI against the Figma screenshot for both look and behavior.
+- **Design System First**: Create consistent tokens and reusable components
+- **Accessibility by Default**: Include ARIA labels, focus management, and keyboard navigation
+- **Performance Conscious**: Optimize images, fonts, and rendering patterns
+- **Responsive Design**: Mobile-first approach with appropriate breakpoints
+- **Type Safety**: Define proper interfaces for component props and data
+- **Testing Integration**: Include visual regression and accessibility testing
+
+#### Framework-Specific Patterns
+
+**Component-Based (React/Vue/Svelte):**
+- Atomic design principles with proper component hierarchy
+- Consistent prop interfaces and state management
+- Style composition with CSS modules, styled-components, or utility classes
+
+**Template-Based (Django/Rails/PHP):**
+- Consistent partial/template structure
+- Server-side rendering with progressive enhancement
+- Asset optimization and caching strategies
+
+---
+
+## Usage Guidelines
+
+1. **Start with Security**: Always consider security implications first
+2. **Choose Your Stack**: Adapt the specific technologies to your project needs
+3. **Maintain Consistency**: Once you choose patterns, apply them consistently
+4. **Test Everything**: Implement comprehensive testing at all levels
+5. **Document Decisions**: Keep architectural decisions and patterns documented
+6. **Review Regularly**: Use ReviewerAgent to maintain code quality
+
+This template provides the agent structure while remaining flexible for any technology stack you choose to implement.

@@ -1,401 +1,258 @@
 ## Project Guidelines
 
-This is an **enterprise-grade Next.js development template** with comprehensive security, testing, and developer experience optimizations.
-These guidelines are for both humans and AI assistants (Cursor / Claude / rick).
+This is a **technology-agnostic development template** with enterprise-grade patterns for security, testing, and developer experience.
+These guidelines are for both humans and AI assistants working with any technology stack.
 
 - High-level **project and architecture** guidelines live here in `CLAUDE.md`.
-- **Agent responsibilities** and MCP integration are documented in `AGENTS.MD`.
-- **Detailed implementation rules** live in `.cursor/rules/*.mdc` files.
+- **Agent responsibilities** and MCP integration are documented in `AGENTS.md`.
+- **Detailed implementation rules** live in `agents/rules/*.mdc` files.
 
-Read this file first to understand the architecture, then consult `AGENTS.MD` for agent delegation.
-
----
-
-## Architecture Overview
-
-### Database Strategy (Choose One)
-
-This template supports **two database variants**. **Choose ONE for your project**:
-
-#### Option A: Prisma + PostgreSQL
-- ✅ **Best for**: Complex schemas, type safety, custom business logic
-- ✅ **Features**: Type-safe queries, migrations, multi-database support
-- ✅ **Use when**: Building complex applications with custom constraints
-
-#### Option B: Supabase
-- ✅ **Best for**: Rapid prototyping, MVPs, real-time features
-- ✅ **Features**: Built-in auth, real-time subscriptions, Row Level Security
-- ✅ **Use when**: Need auth + database + real-time out of the box
-
-**IMPORTANT**: After choosing, remove the unused variant from your project codebase to avoid confusion.
-
-### Tech Stack
-
-- **Frontend**: Next.js 14+ (App Router), React 18, TypeScript
-- **Styling**: Tailwind CSS with design system foundations
-- **Database**: Prisma + PostgreSQL OR Supabase (see choice above)
-- **Authentication**: NextAuth.js v5 (works with both database options)
-- **Testing**: Vitest + Testing Library + Playwright
-- **Deployment**: Vercel (optimized configuration)
-
-### Core Principles
-
-- **Security First**: Comprehensive input validation, CSRF protection, secure headers
-- **Type Safety**: End-to-end TypeScript with runtime validation
-- **Performance**: Optimized bundles, image handling, caching strategies
-- **Developer Experience**: Hot reload, comprehensive testing, automated quality gates
-- **Maintainability**: Clear architecture, consistent patterns, automated formatting
+Read this file first to understand the architecture, then consult `AGENTS.md` for agent delegation.
 
 ---
 
-## Development Guidelines
+## Technology Stack Selection
 
-### File Structure
+This template is designed to work with **any modern technology stack**. Choose the technologies that best fit your project requirements:
 
-```
-app/                    # Next.js App Router
-├── (auth)/            # Route groups for organization
-├── api/               # API routes with validation
-├── globals.css        # Global styles
-├── layout.tsx         # Root layout with providers
-└── page.tsx           # Landing page
+### Frontend Framework Options
 
-components/            # Shared UI components
-├── ui/               # Base design system components
-├── forms/            # Form components with validation
-└── layout/           # Layout-specific components
+#### Option A: React Ecosystem
+- ✅ **Best for**: Complex UIs, large teams, extensive ecosystem
+- ✅ **Variants**: Next.js (full-stack), Create React App, Vite + React
+- ✅ **Use when**: Building complex SPAs or full-stack applications
 
-lib/                  # Shared utilities and configurations
-├── auth.ts           # Authentication configuration
-├── data/             # Database access layer
-├── utils.ts          # Utility functions
-├── validations/      # Zod schemas
-└── env.ts            # Environment validation
+#### Option B: Vue.js Ecosystem  
+- ✅ **Best for**: Progressive adoption, gentle learning curve
+- ✅ **Variants**: Nuxt.js (full-stack), Vue CLI, Vite + Vue
+- ✅ **Use when**: Migrating existing apps or rapid prototyping
 
-hooks/                # Custom React hooks
-docs/                 # Project documentation
-e2e/                  # Playwright E2E tests
-__tests__/           # Unit and integration tests
-```
+#### Option C: Angular
+- ✅ **Best for**: Enterprise applications, TypeScript-first development
+- ✅ **Features**: Built-in TypeScript, comprehensive CLI, enterprise patterns
+- ✅ **Use when**: Building large-scale enterprise applications
 
-### Coding Standards
+#### Option D: Svelte/SvelteKit
+- ✅ **Best for**: Performance-critical applications, smaller bundle sizes
+- ✅ **Features**: Compile-time optimization, minimal runtime overhead
+- ✅ **Use when**: Performance is the primary concern
 
-#### TypeScript Best Practices
+#### Option E: Traditional Server-Side
+- ✅ **Best for**: SEO-critical sites, progressive enhancement
+- ✅ **Variants**: Django templates, Rails views, PHP templates
+- ✅ **Use when**: Building traditional web applications with SSR
 
-```typescript
-// ✅ Good: Strict typing with proper validation
-const userSchema = z.object({
-  email: z.string().email(),
-  name: z.string().min(2).max(50)
-})
+### Backend Framework Options
 
-type User = z.infer<typeof userSchema>
+#### Option A: Node.js
+- ✅ **Frameworks**: Express, Fastify, Koa, Next.js API routes
+- ✅ **Best for**: JavaScript/TypeScript full-stack development
+- ✅ **Use when**: Team has JavaScript expertise, need API + frontend
 
-// ✅ Good: Branded types for IDs
-type UserId = string & { readonly __brand: unique symbol }
+#### Option B: Python
+- ✅ **Frameworks**: Django, FastAPI, Flask
+- ✅ **Best for**: Data-heavy applications, AI/ML integration, rapid development
+- ✅ **Use when**: Building APIs with complex business logic
 
-// ❌ Bad: Using 'any' type
-function processData(data: any) { /* ... */ }
+#### Option C: Go
+- ✅ **Frameworks**: Gin, Echo, Fiber
+- ✅ **Best for**: High-performance APIs, microservices
+- ✅ **Use when**: Performance and concurrency are critical
 
-// ✅ Good: Proper generic constraints
-function processData<T extends Record<string, unknown>>(data: T): T {
-  return validateAndTransform(data)
-}
-```
+#### Option D: Rust
+- ✅ **Frameworks**: Actix-web, Warp, Rocket
+- ✅ **Best for**: System-level performance, memory safety
+- ✅ **Use when**: Building high-performance, secure backends
 
-#### Component Patterns
+#### Option E: Java/Kotlin
+- ✅ **Frameworks**: Spring Boot, Ktor, Quarkus
+- ✅ **Best for**: Enterprise applications, existing Java ecosystem
+- ✅ **Use when**: Working in enterprise Java environments
 
-```typescript
-// ✅ Good: Server Component with proper data fetching
-export default async function UserProfile({ params }: { 
-  params: { id: string } 
-}) {
-  const user = await getUserById(params.id)
-  if (!user) notFound()
-  
-  return <UserCard user={user} />
-}
+### Database Strategy Options
 
-// ✅ Good: Client Component with proper hooks
-'use client'
+#### Option A: SQL Databases
+- ✅ **Databases**: PostgreSQL, MySQL, SQLite
+- ✅ **ORMs**: Prisma, TypeORM, Sequelize (JS), SQLAlchemy (Python), GORM (Go)
+- ✅ **Best for**: Complex relationships, ACID transactions, reporting
 
-interface UserFormProps {
-  user?: User
-  onSubmit: (data: UserFormData) => Promise<void>
-}
+#### Option B: NoSQL Databases
+- ✅ **Databases**: MongoDB, DynamoDB, CouchDB
+- ✅ **ODMs**: Mongoose, AWS SDK, PouchDB
+- ✅ **Best for**: Flexible schemas, horizontal scaling, document storage
 
-export function UserForm({ user, onSubmit }: UserFormProps) {
-  const form = useForm<UserFormData>({
-    resolver: zodResolver(userFormSchema),
-    defaultValues: user
-  })
-  
-  return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      {/* Form fields */}
-    </form>
-  )
-}
-```
+#### Option C: Cloud-Native Solutions
+- ✅ **Options**: Supabase, Firebase, AWS RDS, Azure SQL, PlanetScale
+- ✅ **Best for**: Rapid development, managed infrastructure, built-in features
+- ✅ **Use when**: Want managed database with additional services
 
-#### Security Patterns
+### Authentication Options
 
-```typescript
-// ✅ Good: Input validation at boundaries
-export async function POST(request: NextRequest) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  
-  const body = await request.json()
-  const validation = validateRequest(createUserSchema, body)
-  if (!validation.success) {
-    return NextResponse.json({ error: validation.error }, { status: 400 })
-  }
-  
-  // Process validated data...
-}
+#### Option A: Self-Managed
+- ✅ **Solutions**: NextAuth.js, Passport.js, Django Auth, custom JWT
+- ✅ **Best for**: Custom requirements, full control, specific workflows
+- ✅ **Use when**: Need custom authentication logic
 
-// ✅ Good: Database queries with proper error handling
-export async function getUserById(id: string): Promise<User | null> {
-  try {
-    const user = await prisma.user.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        // Never select passwords or sensitive fields by default
-      }
-    })
-    return user
-  } catch (error) {
-    console.error('Database error:', error)
-    return null
-  }
-}
-```
-
-### Performance Guidelines
-
-- **Server Components First**: Use Server Components unless you need client interactivity
-- **Image Optimization**: Always use `next/image` with proper sizing
-- **Bundle Analysis**: Run `npm run analyze` to check bundle size
-- **Core Web Vitals**: Monitor LCP, FID, CLS metrics
-- **Caching**: Leverage Next.js caching with proper revalidation
-
-### Security Checklist
-
-- [ ] All user inputs validated with Zod schemas
-- [ ] Rate limiting applied to authentication endpoints
-- [ ] Security headers configured in next.config.ts
-- [ ] Environment variables validated at startup
-- [ ] Database queries use ORM (no raw SQL)
-- [ ] Error messages don't leak sensitive information
-- [ ] HTTPS enforced in production
-- [ ] Content Security Policy configured
+#### Option B: Authentication as a Service
+- ✅ **Solutions**: Auth0, Firebase Auth, AWS Cognito, Supabase Auth
+- ✅ **Best for**: Rapid development, enterprise SSO, compliance requirements
+- ✅ **Use when**: Want managed authentication with social providers
 
 ---
 
-## Agent Delegation
+## Core Architecture Principles
 
-### When to Use Specific Agents
+### Security-First Development
+- **Input Validation**: Validate all user inputs at application boundaries
+- **Authentication**: Implement secure session management and MFA where appropriate
+- **Authorization**: Role-based access control with proper middleware
+- **Data Protection**: Encrypt sensitive data, sanitize outputs, secure error handling
+- **Rate Limiting**: Protect against DoS attacks with appropriate limiting strategies
 
-Refer to `AGENTS.MD` for detailed agent responsibilities. Quick reference:
+### Performance Optimization
+- **Asset Optimization**: Compress images, minify code, implement caching
+- **Loading Strategies**: Lazy loading, code splitting, progressive loading
+- **Database Optimization**: Efficient queries, connection pooling, caching layers
+- **Monitoring**: Performance metrics, error tracking, user experience monitoring
 
-- **UI/Design Work** → Use **Gemini** agent (`snippet_frontend`, `modify_frontend`)
-- **API Endpoints** → Use **BackendAgent** for route handlers and business logic
-- **Database Changes** → Use **DBAgent** for schema updates and queries
-- **Testing** → Use **TestAgent** for unit, integration, and E2E tests
-- **Code Review** → Use **ReviewerAgent** for quality and security checks
-- **Figma Implementation** → Follow **Figma MCP** workflow in `AGENTS.MD`
+### Type Safety & Validation
+- **Static Typing**: Use TypeScript, Flow, or language-native typing systems
+- **Runtime Validation**: Schema validation at API boundaries and form inputs
+- **API Contracts**: OpenAPI/GraphQL schemas for API documentation and validation
+- **Database Schemas**: Proper constraints and validation at the database level
 
-### Agent Handoff Rules
+### Testing Strategy
+- **Unit Testing**: Test individual functions and components (80% of tests)
+- **Integration Testing**: Test API endpoints and database operations (15% of tests)
+- **End-to-End Testing**: Test critical user journeys (5% of tests)
+- **Accessibility Testing**: Automated WCAG compliance checking
+- **Security Testing**: Input validation and authentication flow testing
 
-1. **Mixed Tasks**: When a task involves both logic and UI, handle the logic yourself and delegate UI to Gemini
-2. **Database + API**: Let DBAgent handle schema changes, then BackendAgent implements the API layer
-3. **Feature Complete**: After implementation, use ReviewerAgent to validate security and testing coverage
-
----
-
-## Development Workflow
-
-### Getting Started
-
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Set up environment (copy from .env.example once created)
-cp .env.example .env.local
-
-# 3. Choose your database variant
-# For Prisma: Set up database and run migrations
-npm run db:migrate
-npm run db:generate
-
-# For Supabase: Configure your Supabase project URL and keys
-
-# 4. Run development server
-npm run dev
-
-# 5. Set up pre-commit hooks
-npm run prepare
-```
-
-### Quality Gates
-
-This template includes automated quality checks:
-
-```bash
-# Type checking
-npm run type-check
-
-# Linting with auto-fix
-npm run lint:fix
-
-# Code formatting
-npm run format
-
-# Unit tests
-npm run test
-
-# Unit tests with UI
-npm run test:ui
-
-# E2E tests
-npm run test:e2e
-
-# Bundle analysis
-npm run analyze
-```
-
-### Database Commands
-
-```bash
-# Prisma variant
-npm run db:generate     # Generate Prisma client
-npm run db:push         # Push schema to database
-npm run db:migrate      # Create and run migrations
-npm run db:studio       # Open Prisma Studio
-
-# Supabase variant
-# Use Supabase CLI or dashboard for schema management
-# Type generation handled automatically
-```
-
-### Production Deployment
-
-1. **Environment Setup**: Configure production environment variables
-2. **Database**: Run migrations (Prisma) or deploy schema (Supabase)
-3. **Build**: `npm run build` - includes type checking and linting
-4. **Deploy**: Push to Vercel (or your preferred platform)
+### Developer Experience
+- **Development Tools**: Hot reload, debugging tools, comprehensive logging
+- **Code Quality**: Linting, formatting, pre-commit hooks, automated quality gates
+- **Documentation**: API docs, component storybooks, architectural decision records
+- **Deployment**: CI/CD pipelines, environment management, rollback strategies
 
 ---
 
-## Testing Strategy
+## Project Structure Patterns
 
-### Test Pyramid
+### Feature-Based Structure
+Organize code by business domain rather than technical layer:
 
-- **Unit Tests (80%)**: Components, hooks, utilities, data access layer
-- **Integration Tests (15%)**: API routes, database operations, authentication flows
-- **E2E Tests (5%)**: Critical user journeys, cross-browser compatibility
-
-### Testing Patterns
-
-```typescript
-// Unit test example
-describe('Button Component', () => {
-  it('calls onClick when clicked', async () => {
-    const handleClick = vi.fn()
-    render(<Button onClick={handleClick}>Click me</Button>)
-    
-    await user.click(screen.getByRole('button'))
-    expect(handleClick).toHaveBeenCalledOnce()
-  })
-})
-
-// Integration test example
-describe('POST /api/users', () => {
-  it('creates user with valid data', async () => {
-    const userData = { email: 'test@example.com', name: 'Test User' }
-    const response = await POST(createRequest(userData))
-    
-    expect(response.status).toBe(201)
-    // Verify user was created in database
-  })
-})
-
-// E2E test example
-test('user can complete signup flow', async ({ page }) => {
-  await page.goto('/auth/signup')
-  await page.fill('[data-test=email]', 'test@example.com')
-  await page.fill('[data-test=password]', 'securePassword123!')
-  await page.click('[data-test=submit]')
-  
-  await expect(page).toHaveURL('/dashboard')
-})
+```
+src/
+├── features/
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── services/
+│   │   ├── types/
+│   │   └── tests/
+│   └── dashboard/
+│       ├── components/
+│       ├── services/
+│       ├── types/
+│       └── tests/
+├── shared/
+│   ├── components/
+│   ├── utilities/
+│   ├── types/
+│   └── constants/
+└── tests/
+    ├── integration/
+    └── e2e/
 ```
 
----
+### Technology-Specific Adaptations
 
-## Common Commands Reference
+**React/Vue/Angular Projects:**
+- Component-based architecture with proper state management
+- Shared component library with consistent design tokens
+- Custom hooks/composables for reusable logic
 
-```bash
-# Development
-npm run dev              # Start development server
-npm run dev:debug        # Start with debugging enabled
+**Backend API Projects:**
+- Service layer for business logic
+- Repository pattern for data access
+- Middleware for cross-cutting concerns
 
-# Building
-npm run build           # Production build
-npm run start           # Start production server
-
-# Code Quality
-npm run lint            # Check linting
-npm run lint:fix        # Auto-fix linting issues
-npm run format          # Format code with Prettier
-npm run format:check    # Check formatting
-npm run type-check      # TypeScript type checking
-
-# Testing
-npm run test            # Run unit tests
-npm run test:watch      # Run tests in watch mode
-npm run test:ui         # Run tests with Vitest UI
-npm run test:e2e        # Run Playwright tests
-npm run test:e2e:ui     # Run Playwright with UI
-
-# Database (Prisma variant)
-npm run db:generate     # Generate Prisma client
-npm run db:push         # Push schema changes
-npm run db:migrate      # Run migrations
-npm run db:studio       # Open Prisma Studio
-
-# Analysis
-npm run analyze         # Bundle size analysis
-
-# Setup
-npm run prepare         # Install git hooks
-```
+**Full-Stack Projects:**
+- Shared types between frontend and backend
+- API route organization matching frontend features
+- Consistent error handling patterns
 
 ---
 
-## Troubleshooting
+## Quality Standards
 
-### Common Issues
+### Code Quality
+- **Consistency**: Follow established patterns throughout the codebase
+- **Readability**: Clear naming, proper documentation, logical organization
+- **Maintainability**: Modular design, separation of concerns, SOLID principles
+- **Performance**: Efficient algorithms, appropriate caching, resource optimization
 
-**TypeScript Errors**: Run `npm run type-check` for detailed error information
-**Database Issues**: Ensure your database is running and connection string is correct
-**Build Failures**: Check that all environment variables are set in production
-**Test Failures**: Run `npm run test:watch` for detailed test debugging
+### Security Standards
+- **OWASP Top 10**: Address all major web application security risks
+- **Input Validation**: Comprehensive validation with appropriate error handling
+- **Authentication**: Secure session management with proper token handling
+- **Authorization**: Granular permissions with proper access control
+- **Data Protection**: Encryption at rest and in transit, secure data handling
 
-### Performance Issues
+### Testing Standards
+- **Coverage**: Maintain >80% test coverage for business logic
+- **Reliability**: Tests should be deterministic and fast
+- **Maintainability**: Clear test organization and proper mocking patterns
+- **Accessibility**: All user-facing features tested for WCAG compliance
 
-1. Use `npm run analyze` to identify large bundles
-2. Check Network tab for slow API calls
-3. Use React DevTools Browser Profiler for component performance
-4. Monitor Core Web Vitals in production
+### Documentation Standards
+- **API Documentation**: Complete endpoint documentation with examples
+- **Component Documentation**: Props, usage examples, accessibility notes
+- **Architecture Documentation**: Decision records, system diagrams, setup guides
+- **User Documentation**: Feature guides, troubleshooting, FAQ
 
 ---
 
-This template provides a robust foundation for building production-ready Next.js applications with enterprise-grade security, performance, and developer experience.
+## Getting Started
+
+### 1. Choose Your Stack
+Review the options above and select technologies that fit your:
+- **Team expertise** and learning preferences  
+- **Project requirements** and performance needs
+- **Deployment environment** and infrastructure constraints
+- **Timeline** and development velocity requirements
+
+### 2. Adapt the Template
+- Update `agents/rules/*.mdc` files with technology-specific patterns
+- Modify `.cursorrules` to include your chosen stack details
+- Update this `CLAUDE.md` file with stack-specific guidelines
+- Create appropriate configuration files for your chosen tools
+
+### 3. Implement Core Patterns
+- Set up your chosen security patterns (validation, auth, rate limiting)
+- Implement testing tools and maintain quality gates
+- Configure development tools (linting, formatting, debugging)
+- Set up deployment pipelines and environment management
+
+### 4. Follow Agent Patterns
+- Use the agents defined in `AGENTS.md` for specialized tasks
+- Maintain consistency with established patterns
+- Regular code reviews using `ReviewerAgent` patterns
+- Document architectural decisions as you build
+
+---
+
+## Maintenance & Evolution
+
+### Regular Reviews
+- **Security audits**: Regular dependency updates and vulnerability scanning
+- **Performance monitoring**: Track metrics and optimize bottlenecks
+- **Code quality**: Regular refactoring and technical debt management
+- **Documentation**: Keep docs current with code changes
+
+### Technology Updates
+- **Dependencies**: Regular updates with proper testing
+- **Framework versions**: Planned upgrades with migration strategies
+- **Security patches**: Immediate application of critical security updates
+- **Performance improvements**: Adoption of new optimization techniques
+
+This template provides a solid foundation while remaining flexible for any technology stack you choose to implement.

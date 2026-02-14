@@ -1,0 +1,8 @@
+product_name,product_id,quarter,sales_amount,units_sold,region
+iPhone 15 Pro,PROD001,Q4 2024,450000,1500,North America
+iPhone 15 Pro,PROD001,Q3 2024,380000,1200,North America
+MacBook Pro 16,PROD002,Q4 2024,650000,800,North America
+MacBook Air M3,PROD003,Q4 2024,420000,1200,Europe
+iPad Air,PROD004,Q4 2024,280000,1500,Asia Pacific
+Apple Watch Series 9,PROD005,Q4 2024,95000,3500,North America
+AirPods Pro 2,PROD006,Q4 2024,180000,4500,Global

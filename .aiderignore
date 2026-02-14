@@ -1,0 +1,15 @@
+# Aider ignore patterns
+node_modules/
+.next/
+dist/
+build/
+*.log
+.env
+.git/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+coverage/
+.vscode/
+.idea/
